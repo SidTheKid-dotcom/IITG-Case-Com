@@ -1,0 +1,98 @@
+Exploratory Findings
+1. Duplicate Records
+
+    Duplicates: None found. The dataset is unique for all entries.
+
+2. Numeric Attribute Summary
+
+    Customer Age:
+        Mean: 42 years, Range: 18–65 years.
+        Majority of customers are between 30 and 54 years (IQR).
+    Tenure:
+        Mean: 32 months, Range: 1–60 months.
+        Median tenure is 33 months, indicating a moderate distribution of customer longevity.
+    Service Usage Rate:
+        Mean: 15, Range: 1–30.
+        Usage patterns seem diverse with an IQR of 7–23.
+    Support Calls:
+        Average of 5.4 calls, Range: 0–10.
+        50% of customers make 3–8 support calls.
+    Billing Delay:
+        Average: 17 occurrences, Range: 0–30.
+        Distribution skewed toward higher values.
+    Total Expenditure:
+        Mean: ₹542, Range: ₹100–₹1000.
+        Majority spend between ₹314 and ₹772.
+    Recent Activity:
+        Average: 15 interactions, Range: 1–30.
+        Median activity level is high at 16 interactions.
+
+3. Target Variable (Churn)
+
+    Class Distribution:
+        Not Churned (0): 52.65% of customers.
+        Churned (1): 47.35% of customers.
+        Balanced distribution, suitable for predictive modeling.
+
+Visual Analysis
+1. Distributions of Numeric Attributes
+
+    Customer Age:
+        Bell-shaped distribution centered around 40–45 years.
+        No extreme outliers observed.
+    Tenure:
+        Skewed toward lower values, with a majority having tenure under 40 months.
+        Drop-off after 60 months aligns with dataset limits.
+    Service Usage Rate:
+        Fairly even distribution with a peak around 15.
+    Support Calls:
+        Most customers make between 3–8 calls.
+        Few customers with no calls or the maximum of 10.
+    Billing Delay:
+        High concentration around the upper range, suggesting common delays.
+    Total Expenditure:
+        Nearly uniform distribution with slight peaks in the middle range.
+    Recent Activity:
+        Significant activity clustered between 10–25 interactions.
+
+2. Correlation Insights
+
+    Strongest positive correlation with Churn:
+        Billing Delay (0.43): Frequent delays might contribute to churn.
+        Support Calls (0.30): More calls indicate unresolved issues.
+    Weak correlations:
+        Customer Age, Total Expenditure, and Recent Activity show minimal direct impact on churn.
+    Negative correlation:
+        Tenure (-0.40): Longer tenure suggests better retention.
+
+Comparison of Churned vs. Non-Churned Customers
+Key Findings:
+Customer Age:
+
+Churned: Mean age ~43 years; slightly older demographic.
+Non-Churned: Mean age ~41 years.
+Tenure:
+
+Churned: Higher mean tenure (~35.6 months) indicates that longer-tenured customers are more likely to churn.
+Non-Churned: Lower mean tenure (~28.9 months).
+Service Usage Rate:
+
+Churned: Mean rate ~14.1.
+Non-Churned: Higher mean rate ~16.
+Support Calls:
+
+Churned: Higher average (~6.4 calls) compared to ~4.5 calls for non-churned customers, indicating frequent support calls might correlate with churn.
+Billing Delay:
+
+Churned: Mean ~22.3 delays.
+Non-Churned: Lower mean ~12.3 delays, showing a strong association between billing issues and churn.
+Total Expenditure:
+
+Churned: Mean expenditure $519, slightly lower than non-churned customers ($563).
+Recent Activity:
+
+Minimal difference between churned (15.5) and non-churned (15.6).
+Observations:
+Churned customers tend to be older, with higher tenure and more support calls.
+Billing delays and lower service usage are key churn predictors.
+While churned customers spend slightly less on average, the difference isn't substantial.
