@@ -19,10 +19,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load the trained model
-model = joblib.load("../../output/models/churn_model_enhanced.pkl")
+model = joblib.load("output/models/churn_model_enhanced.pkl")
 
 # Load dataset for dynamic ranges
-dataset_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+dataset_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 data = pd.read_csv(dataset_path)
 
 st.title("Customer Churn Prediction and Analysis")
