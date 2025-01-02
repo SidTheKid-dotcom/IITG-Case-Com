@@ -1,10 +1,8 @@
-# Import necessary libraries
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, roc_curve
+import pickle
 
 # Load dataset
 dataset_path = './input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
@@ -13,16 +11,43 @@ data = pd.read_csv(dataset_path)
 # Analyze categorical variables
 categorical_columns = ['Sex', 'PlanType', 'AgreementDuration']
 
-# Visualize distributions and churn relationships
+# Visualize categorical variables vs Churn
 plt.figure(figsize=(20, 6))
 for i, col in enumerate(categorical_columns, 1):
     plt.subplot(1, 3, i)
-    sns.countplot(data=data, x=col, hue='Churn', palette='Set2')
+    sns.countplot(
+        data=data, 
+        x=col, 
+        hue='Churn', 
+        palette='Set1'  # Swapped colors
+    )
     plt.title(f"{col} vs Churn")
     plt.xlabel(col)
     plt.ylabel("Count")
-
 plt.tight_layout()
+plt.show()
+
+# Visualizing numerical features vs Churn
+numerical_columns = ['Tenure', 'TotalExpenditure', 'BillingDelay', 'RecentActivity', 'ServiceUsageRate', 'SupportCalls', 'CustomerAge']
+
+plt.figure(figsize=(18, 12))  # Adjust the figure size to fit a 2x3 layout
+
+# Loop through the numerical columns and create boxplots
+for i, col in enumerate(numerical_columns, 1):
+    plt.subplot(3, 3, i)  # Set 2 rows and 3 columns layout
+    sns.boxplot(
+        x='Churn',
+        y=col,
+        data=data,
+        palette='Set1'  # Red and blue palette
+    )
+    plt.title(f"{col} by Churn Status")
+    plt.xlabel('Churn (1 = Churned, 0 = Not Churned)')
+    plt.ylabel(col)
+
+# Adjust the spacing between rows
+plt.subplots_adjust(hspace=0.6)  # Increase the vertical spacing between rows
+plt.tight_layout(pad=2.0)  # Add padding to further prevent overlap
 plt.show()
 
 # Feature Engineering
@@ -38,11 +63,13 @@ y = data['Churn']
 X = pd.get_dummies(X, columns=categorical_columns, drop_first=True)
 
 # Split data into training and testing sets
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# Train a Random Forest model
-rf_model = RandomForestClassifier(random_state=42)
-rf_model.fit(X_train, y_train)
+# Load the pre-trained model
+model_path = './output/models/churn_model.pkl'
+with open(model_path, 'rb') as file:
+    rf_model = pickle.load(file)
 
 # Make predictions
 y_pred = rf_model.predict(X_test)
@@ -60,18 +87,8 @@ feature_importances = pd.DataFrame({
     'Importance': rf_model.feature_importances_
 }).sort_values(by='Importance', ascending=False)
 
-print("\nTop 5 Feature Importances:")
-print(feature_importances.head())
-
-# Extract insights from top 5 features
-top_features = feature_importances.head()['Feature'].values
-for feature in top_features:
-    plt.figure(figsize=(10, 6))
-    sns.boxplot(data=data, x='Churn', y=feature.split('_')[0], palette='Set2')
-    plt.title(f"Churn vs {feature}")
-    plt.xlabel("Churn")
-    plt.ylabel(feature)
-    plt.show()
+print("\nFeature Importances:")
+print(feature_importances)
 
 # Plot Feature Importances
 plt.figure(figsize=(10, 6))
@@ -82,7 +99,7 @@ plt.show()
 # ROC Curve
 fpr, tpr, thresholds = roc_curve(y_test, y_prob)
 plt.figure(figsize=(10, 6))
-plt.plot(fpr, tpr, color='darkorange', lw=2, label=f"ROC curve (AUC = {roc_auc_score(y_test, y_prob):.2f}")
+plt.plot(fpr, tpr, color='darkorange', lw=2, label=f"ROC curve (AUC = {roc_auc_score(y_test, y_prob):.2f})")
 plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
