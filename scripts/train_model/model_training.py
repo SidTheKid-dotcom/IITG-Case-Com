@@ -33,6 +33,6 @@ def train_and_save_model(data_path, model_path):
     print(f"Model saved to {model_path}")
 
 if __name__ == "__main__":
-    data_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
-    model_path = '../../output/models/churn_model.pkl'
+    data_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+    model_path = 'output/models/churn_model.pkl'
     train_and_save_model(data_path, model_path)

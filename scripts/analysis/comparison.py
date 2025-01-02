@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-file_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+file_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 data = pd.read_csv(file_path)
 
 # Create a comprehensive comparison using multiple visualization types

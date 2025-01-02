@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 import joblib
 
 # Load dataset
-dataset_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+dataset_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 data = pd.read_csv(dataset_path)
 
 # Set the style of the plot
@@ -87,7 +87,7 @@ y = data['Churn']
 X = pd.get_dummies(X, columns=categorical_columns, drop_first=True)
 
 # Load the existing Random Forest model
-model_path = '../../output/models/churn_model.pkl'
+model_path = 'output/models/churn_model.pkl'
 rf_model = joblib.load(model_path)
 
 # Split data into training and testing sets

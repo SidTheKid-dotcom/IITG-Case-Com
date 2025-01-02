@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
 # Load the dataset
-file_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+file_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 dataset = pd.read_csv(file_path)
 
 # Display basic information about the dataset

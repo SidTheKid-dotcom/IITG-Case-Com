@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
 import joblib
 
 # Step 1: Load the Dataset
-data = pd.read_csv("../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv")
+data = pd.read_csv("input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv")
 
 # Step 2: Data Preprocessing
 # Handle missing values (if any)
@@ -84,5 +84,5 @@ for i in sorted_indices:
     print(f"{feature_names[i]}: {importances[i]:.4f}")
 
 # Step 8: Save the Model
-joblib.dump(best_model, "../../output/models/churn_model_enhanced.pkl")
+joblib.dump(best_model, "output/models/churn_model_enhanced.pkl")
 print("Enhanced model saved as 'churn_model_enhanced.pkl'")

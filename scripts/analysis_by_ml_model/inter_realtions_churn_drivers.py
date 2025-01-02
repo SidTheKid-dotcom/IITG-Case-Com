@@ -6,7 +6,7 @@ import pickle
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, roc_curve
 
 # Load dataset
-dataset_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+dataset_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 data = pd.read_csv(dataset_path)
 
 # Analyze categorical variables
@@ -25,7 +25,7 @@ y = data['Churn']
 X = pd.get_dummies(X, columns=categorical_columns, drop_first=True)
 
 # Load the pre-trained Random Forest model
-model_path = '../../output/models/churn_model.pkl'
+model_path = 'output/models/churn_model.pkl'
 with open(model_path, 'rb') as model_file:
     rf_model = pickle.load(model_file)
 

@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 import pickle
 
 # Load dataset
-dataset_path = '../../input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
+dataset_path = 'input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 data = pd.read_csv(dataset_path)
 
 # Analyze categorical variables
@@ -67,7 +67,7 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Load the pre-trained model
-model_path = '../../output/models/churn_model.pkl'
+model_path = 'output/models/churn_model.pkl'
 with open(model_path, 'rb') as file:
     rf_model = pickle.load(file)
 
