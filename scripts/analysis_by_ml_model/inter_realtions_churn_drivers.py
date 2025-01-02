@@ -25,7 +25,7 @@ y = data['Churn']
 X = pd.get_dummies(X, columns=categorical_columns, drop_first=True)
 
 # Load the pre-trained Random Forest model
-model_path = './output/models/churn_model.pkl'
+model_path = '../../output/models/churn_model.pkl'
 with open(model_path, 'rb') as model_file:
     rf_model = pickle.load(model_file)
 
