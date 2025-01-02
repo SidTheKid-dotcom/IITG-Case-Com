@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib  # For loading the saved ML model
+import joblib
+import plotly.express as px
 
 # Load the trained model
 model = joblib.load("./output/models/churn_model_enhanced.pkl")
 
-# Load dataset for dynamic slider ranges
+# Load dataset for dynamic ranges
 dataset_path = './input/Strategy Storm 2025 - Round 2 dataset - SSDataset.csv.csv'
 data = pd.read_csv(dataset_path)
 
-st.title("Customer Churn Prediction")
+st.title("Customer Churn Prediction and Analysis")
 
 # Create sliders for numerical input features
 age = st.slider("Customer Age", int(data['CustomerAge'].min()), int(data['CustomerAge'].max()), step=1)
@@ -46,5 +47,57 @@ transformed_features = preprocessor.transform(input_features)
 classifier = model.named_steps['classifier']
 churn_prob = classifier.predict_proba(transformed_features)[0][1]
 
-# Display the result
-st.write(f"Probability of Churn: {churn_prob * 100:.2f}%")
+# Display the churn probability
+st.metric("Churn Probability", f"{churn_prob * 100:.2f}%")
+
+# Interactive Graph
+st.subheader("Visualize Impact of Parameters on Churn")
+
+# Select parameter to analyze
+parameter_to_vary = st.selectbox(
+    "Select a parameter to analyze its impact on churn probability:",
+    ['CustomerAge', 'Tenure', 'ServiceUsageRate', 'SupportCalls', 'BillingDelay', 'TotalExpenditure', 'RecentActivity']
+)
+
+# Generate data for the graph
+varied_range = np.linspace(
+    data[parameter_to_vary].min(),
+    data[parameter_to_vary].max(),
+    num=100
+)
+churn_probs = []
+
+# Loop through varied values while keeping others constant
+for value in varied_range:
+    temp_features = input_features.copy()
+    temp_features[parameter_to_vary] = value
+    transformed_temp = preprocessor.transform(temp_features)
+    churn_prob = classifier.predict_proba(transformed_temp)[0][1]
+    churn_probs.append(churn_prob)
+
+# Create a DataFrame for visualization
+graph_data = pd.DataFrame({
+    parameter_to_vary: varied_range,
+    "Churn Probability": churn_probs
+})
+
+# Plot the graph
+fig = px.line(
+    graph_data,
+    x=parameter_to_vary,
+    y="Churn Probability",
+    title=f"Impact of {parameter_to_vary} on Churn Probability",
+    labels={"x": parameter_to_vary, "y": "Churn Probability"},
+    template="plotly_white"
+)
+st.plotly_chart(fig)
+
+# Highlight inflection points
+threshold = 0.5  # Example: 50% churn probability
+inflection_points = graph_data[graph_data["Churn Probability"] >= threshold]
+
+if not inflection_points.empty:
+    st.write(f"**Inflection Point Detected**: {parameter_to_vary} value where churn exceeds {threshold * 100:.0f}% is approximately:")
+    st.write(f"{inflection_points.iloc[0][parameter_to_vary]:.2f}")
+else:
+    st.write(f"No inflection point detected for {threshold * 100:.0f}% churn probability.")
