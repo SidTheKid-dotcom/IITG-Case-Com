@@ -40,7 +40,7 @@ with st.container():
         service_usage = st.slider("Service Usage Rate", int(data['ServiceUsageRate'].min()), int(data['ServiceUsageRate'].max()), step=1)
         support_calls = st.slider("Support Calls", int(data['SupportCalls'].min()), int(data['SupportCalls'].max()), step=1)
         billing_delay = st.slider("Billing Delay Incidents", int(data['BillingDelay'].min()), int(data['BillingDelay'].max()), step=1)
-        total_expenditure = st.slider("Total Expenditure ($)", int(data['TotalExpenditure'].min()), int(data['TotalExpenditure'].max()), step=10)
+        total_expenditure = st.slider("Total Expenditure (₹)", int(data['TotalExpenditure'].min()), int(data['TotalExpenditure'].max()), step=10)
         recent_activity = st.slider("Recent Activity", int(data['RecentActivity'].min()), int(data['RecentActivity'].max()), step=1)
         
         # Dropdowns for categorical features
